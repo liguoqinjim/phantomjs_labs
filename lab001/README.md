@@ -4,6 +4,10 @@
 |文件名|简介|
 |---|---|
 |lab001.js|Get和Post方法open网页|
+|lab002.js|evaluate()|
+|lab003.js|render()|
+|lab004.js|viewportSize和zoomFactor|
+|lab005.js|onResourceRequested和onResourceReceived|
 
 #### 注意点
 ##### lab002.js
