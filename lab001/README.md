@@ -16,3 +16,10 @@
 
 ##### lab006.js
  - 启动参数:`.\phantomjs.exe lab001\lab006.js http://www.httpbin.org/get`
+
+##### lab007.js
+ - 在`onResourceRequested`里面，可以根据需要，不如不想加载图片，那么可以调用`abort()`来终止这个连接
+ - 每个连接会触发两次`onResourceReceived`，两次的内容有一点点不同，具体可以见参考资料1
+
+#### 参考资料
+1. http://blog.404mzk.com/phantomjs/onresourcerequestedonresourcereceived.html
