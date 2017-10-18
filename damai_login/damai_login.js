@@ -35,7 +35,6 @@ var steps = [
 ];
 
 var interval = setInterval(function () {
-
   if (!loadInProgress && typeof steps[testindex] == "function") {
     steps[testindex]();
     testindex++;

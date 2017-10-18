@@ -15,8 +15,6 @@ page.onUrlChanged = function () {
   console.log("onUrlChanged");
 };
 page.open('https://passport.jd.com/new/login.aspx', function () {
-
-
   page.evaluate(function () {
     function click(el) {
       var ev = document.createEvent("MouseEvent");
