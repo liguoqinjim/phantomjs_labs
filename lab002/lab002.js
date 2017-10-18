@@ -22,7 +22,7 @@ page.open('https://passport.jd.com/new/login.aspx', function () {
       $('#loginsubmit')[0].click();
       return document.title;
     });
-    //若引入jQuery 则用这种方法来实现click
+
     page.sendEvent('click', rect.left + rect.width / 2, rect.top + rect.height / 2);
     console.log('rect=' + rect);
     var clock = setTimeout(function () {
