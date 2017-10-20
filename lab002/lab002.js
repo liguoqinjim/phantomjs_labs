@@ -23,7 +23,6 @@ page.open('https://passport.jd.com/new/login.aspx', function () {
       return document.title;
     });
 
-    page.sendEvent('click', rect.left + rect.width / 2, rect.top + rect.height / 2);
     console.log('rect=' + rect);
     var clock = setTimeout(function () {
       page.render('./lab002/lab002.png');
