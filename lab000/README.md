@@ -4,6 +4,7 @@
 |---|---|
 |lab001.js|page.open()|
 |lab002.js|读取json文件|
+|lab003.js|返回响应的header和body|
 
 #### 注意
 ##### lab001.js
