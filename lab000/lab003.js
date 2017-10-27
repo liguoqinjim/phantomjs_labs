@@ -5,9 +5,16 @@ page.onConsoleMessage = function (msg) {
 };
 
 page.onResourceReceived = function (response) {
+    console.log("--------------------------------------------------------------------------------");
     console.log("url=" + response.url);
     console.log('Response (#' + response.id + ', stage "' + response.stage + '")');
-    console.log("header=" + response.headers);
+    var i = 0;
+    for (i in response.headers) {
+        console.log("header[" + i + "]:");
+        for (j in response.headers[i]) {
+            console.log("header[" + i + "," + j + "]:" + response.headers[i][j])
+        }
+    }
 };
 
 page.open("http://httpbin.org/cookies/set?k2=v2&k1=v1", function (status) {
