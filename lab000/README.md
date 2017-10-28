@@ -15,3 +15,8 @@
 
 ##### lab002.js
  - 读取外部json文件
+
+##### lab003.js
+ - `onResourceReceived`会触发两次，两次的stage不同
+
+
