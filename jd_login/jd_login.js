@@ -19,8 +19,13 @@ page.viewportSize = {width: 1366, height: 768};
 //截图方法
 function renderPage() {
     page.render('./jd_login/screenshot/jd_login' + pageRenderIndex + '.png');
+    console.log("screenshot[" + pageRenderIndex + "]");
     pageRenderIndex++;
 }
+
+page.onConsoleMessage = function (msg) {
+    console.log("console:" + msg);
+};
 
 //页面加载完成
 page.onLoadFinished = function (status) {
