@@ -26,6 +26,10 @@
 ##### lab002.js
 ![Imgur](https://i.imgur.com/haDhaXT.png)
 
+##### lab003.js
+![Imgur](https://i.imgur.com/Gsemcox.png)
+
 
 #### 参考资料
 1. https://github.com/ariya/phantomjs/issues/13095 (onResourceReceived的redirectURL为null的问题)
+2. https://stackoverflow.com/questions/12710721/how-to-end-a-phantomjs-script-only-after-client-side-redirects-have-taken-place (一种处理重定向的方法)
