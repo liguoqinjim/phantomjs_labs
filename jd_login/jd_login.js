@@ -35,9 +35,12 @@ page.onLoadFinished = function (status) {
 
 page.open("https://passport.jd.com/new/login.aspx?ReturnUrl=https%3A%2F%2Fwww.jd.com%2F", function (status) {
     page.includeJs("https://cdn.bootcss.com/jquery/1.6.4/jquery.min.js", function () {
-        page.evaluate(function () {
+        page.evaluate(function (username, password) {
             $('.login-tab').click();
-        });
+            $('#loginname').val(username);
+            $('#nloginpwd').val(password);
+            $('#loginsubmit').click();
+        }, username, password);
 
         renderPage();
 
@@ -50,7 +53,7 @@ page.open("https://passport.jd.com/new/login.aspx?ReturnUrl=https%3A%2F%2Fwww.jd
 
         // console.log("rect=" + rect);
         var clock = setTimeout(function () {
-            // renderPage();
+            renderPage();
             phantom.exit();
         }, 3000);
     });
