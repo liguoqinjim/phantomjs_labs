@@ -20,4 +20,10 @@
 ##### lab003.js
  - `onResourceReceived`会触发两次，两次的stage不同
 
+##### lab004.js
+ - 注意调用click的时候，要加一个`[0]`
+ - `onResourceRequested`会catch到点击之后产生的新的请求
 
+#### 运行截图
+##### lab004.js
+![Imgur](https://i.imgur.com/gXhtEaA.png)

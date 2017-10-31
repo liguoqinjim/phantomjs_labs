@@ -23,7 +23,7 @@ page.open("http://httpbin.org/", function (status) {
     console.log("open");
     page.includeJs("https://cdn.bootcss.com/jquery/1.6.4/jquery.min.js", function () {
         page.evaluate(function () {
-            $('#manpage > div > ul:nth-child(6) > li:nth-child(2) > a').click();
+            $('#manpage > div > ul:nth-child(6) > li:nth-child(2) > a')[0].click();
         });
 
         var clock = setTimeout(function () {
