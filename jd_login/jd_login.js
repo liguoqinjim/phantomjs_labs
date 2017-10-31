@@ -44,7 +44,7 @@ page.open("https://passport.jd.com/new/login.aspx?ReturnUrl=https%3A%2F%2Fwww.jd
             $('.login-tab').click();
             $('#loginname').val(username);
             $('#nloginpwd').val(password);
-            $('#loginsubmit').click();
+            $('#loginsubmit')[0].click();
         }, username, password);
 
         renderPage();

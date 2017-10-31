@@ -5,6 +5,7 @@
 |lab001.js|page.open()|
 |lab002.js|读取json文件|
 |lab003.js|返回响应的header和body|
+|lab004.js|测试点击一个按钮之后发起的请求是否会被catch|
 
 #### 注意
 ##### lab001.js
