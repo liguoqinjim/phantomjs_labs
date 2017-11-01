@@ -17,9 +17,10 @@ phantom.outputEncoding = "gbk";
 page.viewportSize = {width: 1366, height: 768};
 
 //所有要访问的页面
-var urls=new Array();
-urls[0]="https://passport.jd.com/new/login.aspx?ReturnUrl=https%3A%2F%2Fwww.jd.com%2F";
-urls[1]="https://www.jd.com/";
+var urls = new Array();
+urls[0] = "https://passport.jd.com/new/login.aspx?ReturnUrl=https%3A%2F%2Fwww.jd.com%2F";
+urls[1] = "https://www.jd.com/";
+urls[2] = "https://item.jd.com/5178751.html";
 
 //截图方法
 function renderPage() {
@@ -41,34 +42,44 @@ page.onLoadFinished = function (status) {
 
     renderPage();
 
-    if (page.url === urls[1]){
+    if (page.url === urls[1]) {
         console.log("登录界面加载完成");
+        url_buy();
+    } else if (page.url === urls[2]) {
+        console.log("商品界面加载完成");
+        phantom.exit();
     }
 };
 
-page.open("https://passport.jd.com/new/login.aspx?ReturnUrl=https%3A%2F%2Fwww.jd.com%2F", function (status) {
-    page.includeJs("https://cdn.bootcss.com/jquery/1.6.4/jquery.min.js", function () {
-        page.evaluate(function (username, password) {
-            $('.login-tab').click();
-            $('#loginname').val(username);
-            $('#nloginpwd').val(password);
-            $('#loginsubmit')[0].click();
-        }, username, password);
-
-        // renderPage();
-        //
-        // // var rect = page.evaluate(function (username, password) {
-        // //     $('#login_email').val(username);
-        // //     $('#login_pwd_txt').trigger("focus");
-        // //     $('#login_pwd').val(password);
-        // //     $('#subbtn').click();
-        // // }, username, password);
-        //
-        // // console.log("rect=" + rect);
-        // var clock = setTimeout(function () {
-        //     renderPage();
-        //     phantom.exit();
-        // }, 3000);
+//登录
+function url_login() {
+    page.open("https://passport.jd.com/new/login.aspx?ReturnUrl=https%3A%2F%2Fwww.jd.com%2F", function (status) {
+        page.includeJs("https://cdn.bootcss.com/jquery/1.6.4/jquery.min.js", function () {
+            page.evaluate(function (username, password) {
+                $('.login-tab').click();
+                $('#loginname').val(username);
+                $('#nloginpwd').val(password);
+                $('#loginsubmit')[0].click();
+            }, username, password);
+        });
     });
-});
+}
 
+//点击购买
+function url_buy() {
+    var product_url = urls[2];
+
+    page.open(product_url, function () {
+        page.includeJs("https://cdn.bootcss.com/jquery/1.6.4/jquery.min.js", function () {
+            page.evaluate(function () {
+                // $('.login-tab').click();
+                // $('#loginname').val(username);
+                // $('#nloginpwd').val(password);
+                // $('#loginsubmit')[0].click();
+            });
+        });
+    });
+}
+
+//程序开始
+url_login();
