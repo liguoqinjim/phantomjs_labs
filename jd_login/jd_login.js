@@ -16,6 +16,11 @@ phantom.outputEncoding = "gbk";
 //设置页面大小
 page.viewportSize = {width: 1366, height: 768};
 
+//所有要访问的页面
+var urls=new Array();
+urls[0]="https://passport.jd.com/new/login.aspx?ReturnUrl=https%3A%2F%2Fwww.jd.com%2F";
+urls[1]="https://www.jd.com/";
+
 //截图方法
 function renderPage() {
     page.render('./jd_login/screenshot/jd_login' + pageRenderIndex + '.png');
@@ -32,10 +37,13 @@ page.onLoadFinished = function (status) {
     // page.render('./jd_login/jd_login.png');
     //
     // console.log("截屏完成");
+    console.log("加载完成:" + page.url);
 
     renderPage();
 
-    // phantom.exit();
+    if (page.url === urls[1]){
+        console.log("登录界面加载完成");
+    }
 };
 
 page.open("https://passport.jd.com/new/login.aspx?ReturnUrl=https%3A%2F%2Fwww.jd.com%2F", function (status) {
@@ -47,19 +55,20 @@ page.open("https://passport.jd.com/new/login.aspx?ReturnUrl=https%3A%2F%2Fwww.jd
             $('#loginsubmit')[0].click();
         }, username, password);
 
-        renderPage();
-
-        // var rect = page.evaluate(function (username, password) {
-        //     $('#login_email').val(username);
-        //     $('#login_pwd_txt').trigger("focus");
-        //     $('#login_pwd').val(password);
-        //     $('#subbtn').click();
-        // }, username, password);
-
-        // console.log("rect=" + rect);
-        var clock = setTimeout(function () {
-            renderPage();
-            phantom.exit();
-        }, 3000);
+        // renderPage();
+        //
+        // // var rect = page.evaluate(function (username, password) {
+        // //     $('#login_email').val(username);
+        // //     $('#login_pwd_txt').trigger("focus");
+        // //     $('#login_pwd').val(password);
+        // //     $('#subbtn').click();
+        // // }, username, password);
+        //
+        // // console.log("rect=" + rect);
+        // var clock = setTimeout(function () {
+        //     renderPage();
+        //     phantom.exit();
+        // }, 3000);
     });
 });
+
