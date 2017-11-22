@@ -7,10 +7,21 @@ var userAgent = system.args[4];
 var postdata = system.args[5];
 var method = system.args[6];
 var timeout = system.args[7];
+
+//输出参数
+// console.log("url=" + url);
+// console.log("cookie=" + cookie);
+// console.log("pageEncode=" + pageEncode);
+// console.log("userAgent=" + userAgent);
+// console.log("postdata=" + postdata);
+// console.log("method=" + method);
+// console.log("timeout=" + timeout);
+// phantom.exit();
+
 var ret = "";
 var exit = function () {
-  console.log(ret);
-  phantom.exit();
+    console.log(ret);
+    phantom.exit();
 };
 
 phantom.outputEncoding = pageEncode;
@@ -18,48 +29,61 @@ page.settings.userAgent = userAgent;
 page.settings.resourceTimeout = timeout;
 page.settings.XSSAuditingEnabled = true;
 page.onResourceRequested = function (requestData, request) {
-  request.setHeader('Cookie', cookie)
+    request.setHeader('Cookie', cookie)
+};
+page.onResourceReceived = function (response) {
+    console.log("liguoqinjim received11111111111111111111111111111");
+    console.log("url=" + response.url);
+
+    for (var j in response.headers) {//用javascript的for/in循环遍历对象的属性
+        // var m = sprintf("AttrId[%d]Value[%d]", j, result.Attrs[j]);
+        // message += m;
+        // console.log(response.headers[j]);
+        console.log(response.headers[j]["name"] + ":" + response.headers[j]["value"]);
+    }
+
+    console.log("liguoqinjim received22222222222222222222222222222");
 };
 page.onError = function (msg, trace) {
-  console.log("error:" + msg);
+    console.log("error:" + msg);
 };
 page.onResourceTimeout = function (e) {
-  console.log("phantomjs onResourceTimeout error");
-  // console.log(e.errorCode);   // it'll probably be 408
-  // console.log(e.errorString); // it'll probably be 'Network timeout on resource'
-  // console.log(e.url);         // the url whose request timed out
-  phantom.exit(1);
+    console.log("phantomjs onResourceTimeout error");
+    // console.log(e.errorCode);   // it'll probably be 408
+    // console.log(e.errorString); // it'll probably be 'Network timeout on resource'
+    // console.log(e.url);         // the url whose request timed out
+    phantom.exit(1);
 };
 page.onResourceError = function (resourceError) {
 };
 page.onLoadFinished = function (status) {
-  if (status !== 'success') {
-    console.log("phantomjs status:" + status);
-    exit();
-  } else {
-    var cookies = new Array();
-    for (var i in page.cookies) {
-      var cookie = page.cookies[i];
-      var c = cookie["name"] + "=" + cookie["value"];
-      for (var obj in cookie) {
-        if (obj == 'name' || obj == 'value') {
-          continue;
+    if (status !== 'success') {
+        console.log("phantomjs status:" + status);
+        exit();
+    } else {
+        var cookies = new Array();
+        for (var i in page.cookies) {
+            var cookie = page.cookies[i];
+            var c = cookie["name"] + "=" + cookie["value"];
+            for (var obj in cookie) {
+                if (obj == 'name' || obj == 'value') {
+                    continue;
+                }
+                c += "; " + obj + "=" + cookie[obj];
+            }
+            cookies[i] = c;
         }
-        c += "; " + obj + "=" + cookie[obj];
-      }
-      cookies[i] = c;
-    }
 
-    var resp = {
-      "Cookies": cookies,
-      "Body": page.content
-    };
+        var resp = {
+            "Cookies": cookies,
+            "Body": page.content
+        };
 
-    if (page.content.indexOf("body") != -1) {
-      ret = JSON.stringify(resp);
-      exit();
+        if (page.content.indexOf("body") != -1) {
+            ret = JSON.stringify(resp);
+            exit();
+        }
     }
-  }
 };
 
 page.open(url, method, postdata, function (status) {
