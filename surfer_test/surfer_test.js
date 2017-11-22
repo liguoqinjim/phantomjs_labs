@@ -28,21 +28,32 @@ phantom.outputEncoding = pageEncode;
 page.settings.userAgent = userAgent;
 page.settings.resourceTimeout = timeout;
 page.settings.XSSAuditingEnabled = true;
+
+//强制设置cookie
+phantom.addCookie({
+    'name': 'k3', /* required property */
+    'value': 'v3', /* required property */
+    'domain': 'httpbin.org',
+    'path': '/', /* required property */
+});
+
 page.onResourceRequested = function (requestData, request) {
     request.setHeader('Cookie', cookie)
 };
 page.onResourceReceived = function (response) {
-    console.log("liguoqinjim received11111111111111111111111111111");
-    console.log("url=" + response.url);
+    if (response.stage === "end") {
+        console.log("liguoqinjim received11111111111111111111111111111");
+        console.log("url=" + response.url);
 
-    for (var j in response.headers) {//用javascript的for/in循环遍历对象的属性
-        // var m = sprintf("AttrId[%d]Value[%d]", j, result.Attrs[j]);
-        // message += m;
-        // console.log(response.headers[j]);
-        console.log(response.headers[j]["name"] + ":" + response.headers[j]["value"]);
+        for (var j in response.headers) {//用javascript的for/in循环遍历对象的属性
+            // var m = sprintf("AttrId[%d]Value[%d]", j, result.Attrs[j]);
+            // message += m;
+            // console.log(response.headers[j]);
+            console.log(response.headers[j]["name"] + ":" + response.headers[j]["value"]);
+        }
+
+        console.log("liguoqinjim received22222222222222222222222222222");
     }
-
-    console.log("liguoqinjim received22222222222222222222222222222");
 };
 page.onError = function (msg, trace) {
     console.log("error:" + msg);
