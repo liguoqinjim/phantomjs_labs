@@ -8,6 +8,12 @@ var postdata = system.args[5];
 var method = system.args[6];
 var timeout = system.args[7];
 
+var ret = "";
+var exit = function () {
+    console.log(ret);
+    phantom.exit();
+};
+
 //输出参数
 // console.log("url=" + url);
 // console.log("cookie=" + cookie);
@@ -16,13 +22,15 @@ var timeout = system.args[7];
 // console.log("postdata=" + postdata);
 // console.log("method=" + method);
 // console.log("timeout=" + timeout);
-// phantom.exit();
 
-var ret = "";
-var exit = function () {
-    console.log(ret);
-    phantom.exit();
-};
+// ret += (url + "\n");
+// ret += (cookie + "\n");
+// ret += (pageEncode + "\n");
+// ret += (userAgent + "\n");
+// ret += (postdata + "\n");
+// ret += (method + "\n");
+// ret += (timeout + "\n");
+// exit();
 
 phantom.outputEncoding = pageEncode;
 page.settings.userAgent = userAgent;
@@ -60,21 +68,23 @@ page.onResourceRequested = function (requestData, request) {
 };
 page.onResourceReceived = function (response) {
     if (response.stage === "end") {
-        console.log("liguoqinjim received11111111111111111111111111111");
-        console.log("url=" + response.url);
-
-        for (var j in response.headers) {//用javascript的for/in循环遍历对象的属性
-            // var m = sprintf("AttrId[%d]Value[%d]", j, result.Attrs[j]);
-            // message += m;
-            // console.log(response.headers[j]);
-            console.log(response.headers[j]["name"] + ":" + response.headers[j]["value"]);
-        }
-
-        console.log("liguoqinjim received22222222222222222222222222222");
+        // console.log("liguoqinjim received1------------------------------------------------");
+        // console.log("url=" + response.url);
+        //
+        // for (var j in response.headers) {//用javascript的for/in循环遍历对象的属性
+        //     // var m = sprintf("AttrId[%d]Value[%d]", j, result.Attrs[j]);
+        //     // message += m;
+        //     // console.log(response.headers[j]);
+        //     console.log(response.headers[j]["name"] + ":" + response.headers[j]["value"]);
+        // }
+        //
+        // console.log("liguoqinjim received2------------------------------------------------");
     }
 };
 page.onError = function (msg, trace) {
     console.log("error:" + msg);
+    ret = JSON.stringify(msg);
+    exit();
 };
 page.onResourceTimeout = function (e) {
     console.log("phantomjs onResourceTimeout error");
@@ -98,7 +108,13 @@ page.onLoadFinished = function (status) {
                 if (obj == 'name' || obj == 'value') {
                     continue;
                 }
-                c += "; " + obj + "=" + cookie[obj];
+                if (obj == "httponly" || obj == "secure") {
+                    if (cookie[obj] == true) {
+                        c += ";" + obj;
+                    }
+                } else {
+                    c += "; " + obj + "=" + cookie[obj];
+                }
             }
             cookies[i] = c;
         }
