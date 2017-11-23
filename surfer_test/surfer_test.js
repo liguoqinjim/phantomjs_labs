@@ -29,13 +29,31 @@ page.settings.userAgent = userAgent;
 page.settings.resourceTimeout = timeout;
 page.settings.XSSAuditingEnabled = true;
 
+function addCookie() {
+    if (cookie != "") {
+        var cookies = JSON.parse(cookie);
+        for (var i = 0; i < cookies.length; i++) {
+            var c = cookies[i];
+
+            phantom.addCookie({
+                'name': c.name, /* required property */
+                'value': c.value, /* required property */
+                'domain': c.domain,
+                'path': c.path, /* required property */
+            });
+        }
+    }
+}
+
+addCookie();
+
 //强制设置cookie
-phantom.addCookie({
-    'name': 'k3', /* required property */
-    'value': 'v3', /* required property */
-    'domain': 'httpbin.org',
-    'path': '/', /* required property */
-});
+// phantom.addCookie({
+//     'name': 'k3', /* required property */
+//     'value': 'v3', /* required property */
+//     'domain': 'httpbin.org',
+//     'path': '/', /* required property */
+// });
 
 page.onResourceRequested = function (requestData, request) {
     request.setHeader('Cookie', cookie)
